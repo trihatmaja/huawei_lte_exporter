@@ -68,7 +68,7 @@ class GetHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
 router_address = os.getenv('ROUTER_ADDRESS', '192.168.8.1')
 router_user = os.getenv('ROUTER_USER', 'admin')
 router_password = os.getenv("ROUTER_PASS", 'admin')
-prom_port = os.getenv('PROM_PORT', '8080')
+prom_port = os.getenv('PROM_PORT', 8080)
 
 Handler = GetHandler
 httpd = SocketServer.TCPServer("", int(prom_port), Handler)
