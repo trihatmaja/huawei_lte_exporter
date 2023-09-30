@@ -25,6 +25,7 @@ def prom_exporter():
 	# Set common response attributes
 	band = client.device.signal().get('band')
 	device = 'deviceName="'+ client.device.information().get('DeviceName')+'",iccid="'+client.device.information().get('Iccid')+'"'
+	wanIP = 'wanIPAddress="'+client.device.information().get('WanIPAddress')+'"'
 	deviceband = device
 	if band is not None:
 		deviceband = device+',band="'+band+'"'
@@ -37,7 +38,7 @@ def prom_exporter():
 				'rscp' : { 'help': 'Denotes the power measured by a receiver on a particular physical communication channel in dBm', 'type': 'gauge', 'device': deviceband, 'value': client.device.signal().get('rscp')},
 				'sinr' : { 'help': 'The signal-to-noise ratio of the given signal in dB', 'type': 'gauge', 'device': deviceband, 'value': client.device.signal().get('sinr')},
 				'ecio' : { 'help': 'The EC/IO is a measure of the quality/cleanliness of the signal from the tower to the modem and indicates the signal-to noise ratio in dB', 'type': 'gauge', 'device': deviceband, 'value': client.device.signal().get('ecio')},
-			 	'wanIP': { 'help': 'The WAN IP address', 'type':'gauge', 'device': deviceband+'wanIPAddress="'+client.device.information().get('WanIPAddress')+'"', 'value': 1}
+			 	'wanIP': { 'help': 'The WAN IP address', 'type':'gauge', 'device': deviceband, 'wanIP': wanIP, 'value': 1}
 			 }
 	if os.environ.get('VERBOSE') is not None:
 		pprint.pprint(signal)	
