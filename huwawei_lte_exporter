@@ -24,19 +24,20 @@ def prom_exporter():
 
 	# Set common response attributes
 	band = client.device.signal().get('band')
-	device = 'deviceName="'+ client.device.information().get('DeviceName')+'",iccid="'+client.device.information().get('Iccid')+'"'
+	device = 'deviceName="'+ client.device.information().get('DeviceName')+'",iccid="'+client.device.information().get('Iccid')+'",'
 	deviceband = device
 	if band is not None:
 		deviceband = device+',band="'+band+'"'
 
 	# Retrieve attributes
-	signal = {	'band': { 'help': 'The signal band the LTE connection is using', 'type': 'gauge', 'device': device, 'value': band},
-				'rsrp': { 'help': 'The average power received from a single Reference signal in dBm', 'type': 'gauge', 'device': deviceband, 'value': client.device.signal().get('rsrp')},
-				'rsrq': { 'help': 'Indicates quality of the received signal in db', 'type': 'gauge', 'device': deviceband, 'value': client.device.signal().get('rsrq')},
-				'rssi': { 'help': 'Represents the entire received power including the wanted power from the serving cell as well as all co-channel power and other sources of noise in dBm', 'type': 'gauge', 'device': deviceband, 'value': client.device.signal().get('rssi')},
-				'rscp': { 'help': 'Denotes the power measured by a receiver on a particular physical communication channel in dBm', 'type': 'gauge', 'device': deviceband, 'value': client.device.signal().get('rscp')},
-				'sinr': { 'help': 'The signal-to-noise ratio of the given signal in dB', 'type': 'gauge', 'device': deviceband, 'value': client.device.signal().get('sinr')},
-				'ecio': { 'help': 'The EC/IO is a measure of the quality/cleanliness of the signal from the tower to the modem and indicates the signal-to noise ratio in dB', 'type': 'gauge', 'device': deviceband, 'value': client.device.signal().get('ecio')}
+	signal = {	'band' : { 'help': 'The signal band the LTE connection is using', 'type': 'gauge', 'device': device, 'value': band},
+				'rsrp' : { 'help': 'The average power received from a single Reference signal in dBm', 'type': 'gauge', 'device': deviceband, 'value': client.device.signal().get('rsrp')},
+				'rsrq' : { 'help': 'Indicates quality of the received signal in db', 'type': 'gauge', 'device': deviceband, 'value': client.device.signal().get('rsrq')},
+				'rssi' : { 'help': 'Represents the entire received power including the wanted power from the serving cell as well as all co-channel power and other sources of noise in dBm', 'type': 'gauge', 'device': deviceband, 'value': client.device.signal().get('rssi')},
+				'rscp' : { 'help': 'Denotes the power measured by a receiver on a particular physical communication channel in dBm', 'type': 'gauge', 'device': deviceband, 'value': client.device.signal().get('rscp')},
+				'sinr' : { 'help': 'The signal-to-noise ratio of the given signal in dB', 'type': 'gauge', 'device': deviceband, 'value': client.device.signal().get('sinr')},
+				'ecio' : { 'help': 'The EC/IO is a measure of the quality/cleanliness of the signal from the tower to the modem and indicates the signal-to noise ratio in dB', 'type': 'gauge', 'device': deviceband, 'value': client.device.signal().get('ecio')},
+			 	'wanIP': { 'help': 'The WAN IP address', 'type':'gauge', 'device': deviceband, 'value': client.device.information().get('WanIPAddress')}
 			 }
 	if os.environ.get('VERBOSE') is not None:
 		pprint.pprint(signal)	
