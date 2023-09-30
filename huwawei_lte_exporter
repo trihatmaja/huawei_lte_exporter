@@ -71,6 +71,6 @@ router_password = os.getenv("ROUTER_PASS", 'admin')
 prom_port = os.getenv('PROM_PORT', 8080)
 
 Handler = GetHandler
-httpd = SocketServer.TCPServer("", int(prom_port), Handler)
+httpd = SocketServer.TCPServer(("", int(prom_port)), Handler)
 
 httpd.serve_forever()
